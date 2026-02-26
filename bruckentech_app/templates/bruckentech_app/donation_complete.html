@@ -3,7 +3,7 @@
 {% block title %}Thank You{% endblock %}
 
 {% block content %}
-    <main class="max-w-7xl mx-auto px-10 py-24 text-center">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
         {% if status == 'successful' %}
             <h1 class="text-4xl font-bold text-primary">Thank you for your donation!</h1>
             <p class="mt-4">We received your payment (reference {{ tx_ref }}).</p>
