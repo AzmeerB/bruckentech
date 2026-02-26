@@ -1,0 +1,7 @@
+/* logo helper was replaced by Tailwind utility classes; kept for reference */
+/* .logo-responsive is no longer used */
+
+/* fallback rule for svg favicons/mask icons */
+@supports (mask-image: url()){ 
+    /* nothing to add, just demonstrates support detection */
+}

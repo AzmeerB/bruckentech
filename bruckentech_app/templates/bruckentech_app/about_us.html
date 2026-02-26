@@ -1,0 +1,128 @@
+{% extends "bruckentech_app/base.html" %}
+
+{% block title %}About Brückentech Foundation{% endblock %}
+
+{% block content %}
+<header class="relative w-full h-[400px] flex items-end overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center" data-alt="Community landscape of Kasese region Uganda" style="
+        background-image: linear-gradient(to top, rgba(24,22,17,0.9), rgba(24,22,17,0.2)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuB5NQqMekHv5z9dwmHJVgszVtzWWSzMYNlMCt7xMbQp5NH5iF9EBXn0VArJRI79bFOdNu0hkEiga6EvNixfUMigd8c2HHW9eh9wwAXK5hSZzvTIQDwU52xgRlB-HLK9MIclkJbiozzJ6j71VCTHQ6j0_f-NBNA4y1Gx51-eCTPf06UG-PDZrfRfIEXAab897Z3ZkILdTyXh7whVvdle6M5SaTZyGbTsTwJiGovB8seRYiQRo5Fsrmo7Cz9KdPpQzTGSPFaus8K_2m0');">
+    </div>
+    <div class="relative max-w-7xl mx-auto px-6 pb-12 w-full">
+        <div class="flex items-center gap-2 text-primary/80 mb-4 text-sm font-medium">
+            <a href="{% url 'home' %}">Home</a>
+            <span class="material-symbols-outlined text-xs">chevron_right</span>
+            <span class="text-slate-100">About Us</span>
+        </div>
+        <h2 class="text-5xl font-bold text-white max-w-2xl leading-tight">
+            Empowering Communities Through Connection
+        </h2>
+    </div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-20">
+    <section class="mb-24">
+        <div class="text-center mb-16">
+            <h2 class="text-primary font-bold uppercase tracking-widest text-sm mb-3">Our Core Foundation</h2>
+            <h3 class="text-3xl md:text-4xl font-bold">Mission, Vision &amp; Core Values</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl p-8">
+                <div class="text-primary text-3xl font-bold mb-3">🎯</div>
+                <h4 class="text-xl font-black mb-3">Our Mission</h4>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                    To equip underserved youth in Kasese with world-class digital skills, mentorship, and global connections so they can build careers in technology and drive economic growth in their communities.
+                </p>
+            </div>
+            <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl p-8">
+                <div class="text-primary text-3xl font-bold mb-3">✨</div>
+                <h4 class="text-xl font-black mb-3">Our Vision</h4>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                    A world where geography and circumstance do not limit opportunity. Where every young person in Africa has access to technology education and the tools to build their future.
+                </p>
+            </div>
+            <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl p-8">
+                <div class="text-primary text-3xl font-bold mb-3">💪</div>
+                <h4 class="text-xl font-black mb-3">Our Values</h4>
+                <ul class="text-slate-600 dark:text-slate-400 space-y-2">
+                    <li><strong>Accessibility</strong> – Tech education for all</li>
+                    <li><strong>Excellence</strong> – Industry-standard training</li>
+                    <li><strong>Community</strong> – Lifting others together</li>
+                    <li><strong>Sustainability</strong> – Long-term impact</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="mb-24 border-t border-slate-200 dark:border-primary/10 pt-16">
+        <h2 class="text-3xl font-black mb-12">Our Story</h2>
+        <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 space-y-6 text-lg leading-relaxed">
+            <p>
+                Brückentech was founded in 2025 by Boniface Otim with a simple but powerful belief: the next generation of African tech leaders are right here in Kasese—they just need access, training, and opportunity.
+            </p>
+            <p>
+                What started as a grassroots workshop in a small space has grown into a full-fledged organization running multiple programs, from beginner digital literacy to advanced full-stack development. We've trained over 500 youth and installed them in internships, freelance positions, and full-time tech roles.
+            </p>
+            <p>
+                Our approach is different: we don't just teach code, we build mentors. We don't just offer certificates, we launch careers. We don't just work in isolation—we partner with global leaders like Cisco to ensure our curriculum remains world-class.
+            </p>
+            <p>
+                Today, our alumni are working as developers for international companies, running their own tech startups, and coming back to mentor the next cohort. That's the bridge we're building: from poverty and limited opportunity, to possibility and agency.
+            </p>
+        </div>
+    </section>
+    <section class="mb-24 border-t border-slate-200 dark:border-primary/10 pt-16">
+        <h2 class="text-3xl font-black mb-12">Meet Our Team</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-6xl text-primary/30">person</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black text-slate-900 dark:text-white mb-1">Boniface Otim</h3>
+                    <p class="text-primary text-sm font-bold mb-3">Founder & Program Coordinator</p>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">
+                        Visionary educator with a passion for building bridges between global tech and local communities.
+                    </p>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-6xl text-primary/30">person</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black text-slate-900 dark:text-white mb-1">Mentor Network</h3>
+                    <p class="text-primary text-sm font-bold mb-3">Industry Mentors &amp; Volunteers</p>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">
+                        A global community of developers, engineers, and business leaders dedicated to guiding the next generation.
+                    </p>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-6xl text-primary/30">person</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black text-slate-900 dark:text-white mb-1">You?</h3>
+                    <p class="text-primary text-sm font-bold mb-3">Join Our Team</p>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">
+                        We're looking for passionate mentors, instructors, and partners to help us scale impact.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-16 bg-primary/10 border border-primary/20 rounded-2xl px-8 text-center">
+        <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4">Interested in Joining or Supporting Us?</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 max-w-2xl mx-auto">
+            Whether you want to mentor, donate, volunteer, or partner—we'd love to hear from you.
+        </p>
+        <a href="{% url 'action' %}" class="inline-block bg-primary text-background-dark font-bold px-8 py-3 rounded-xl hover:scale-105 transition-transform">
+            Get in Touch
+        </a>
+    </section>
+    <section class="mb-24">
+        <h3 class="text-2xl font-bold mb-4">Our Story</h3>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            Founded in 2025 by Boniface Otim, we began as a small workshop and have grown into a foundation focused on sustainable tech education and empowerment.
+        </p>
+    </section>
+</main>
+{% endblock %}

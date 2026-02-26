@@ -1,0 +1,19 @@
+{% extends "bruckentech_app/base.html" %}
+
+{% block title %}Thank You{% endblock %}
+
+{% block content %}
+    <main class="max-w-7xl mx-auto px-10 py-24 text-center">
+        {% if status == 'successful' %}
+            <h1 class="text-4xl font-bold text-primary">Thank you for your donation!</h1>
+            <p class="mt-4">We received your payment (reference {{ tx_ref }}).</p>
+            {% if donation %}
+                <p class="mt-2">Amount: ${{ donation.amount }} &middot; Email: {{ donation.email }}</p>
+            {% endif %}
+        {% else %}
+            <h1 class="text-4xl font-bold text-red-600">Payment {{ status|default:'failed' }}</h1>
+            <p class="mt-4">If you think this is an error you can try again or contact us.</p>
+        {% endif %}
+        <p class="mt-8"><a href="{% url 'home' %}" class="text-primary underline">Return home</a></p>
+    </main>
+{% endblock %}

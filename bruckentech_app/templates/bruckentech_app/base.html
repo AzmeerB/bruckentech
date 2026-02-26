@@ -1,0 +1,172 @@
+<!doctype html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Bruckentech{% endblock %}</title>
+    {% load static %}
+
+    <!-- fonts & icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+
+    <!-- tailwind via CDN with custom config -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#eebd2b",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#221d10",
+                        "navy-deep": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body { font-family: "Work Sans", sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings:
+                "FILL" 0,
+                "wght" 400,
+                "GRAD" 0,
+                "opsz" 24;
+        }
+    </style>
+
+    {% block head_extra %}{% endblock %}
+
+    <!-- favicons & app icons -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}" />
+    <link rel="mask-icon" href="{% static 'images/logo_070136.png' %}" color="#eebd2b" />
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+    <!-- site navigation -->
+    <nav class="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-20 items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <a href="{% url 'home' %}" class="flex items-center justify-center w-32 md:w-56 lg:w-72" aria-label="Brückentech home">
+                        <img src="{% static 'images/logo_070136.png' %}" alt="Brückentech logo" class="h-12 md:h-16 lg:h-20 w-full object-contain" />
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'home' %}">Home</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'about_us' %}">About Us</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'programs' %}">Programs</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'agency' %}">Digital Agency</a>
+                    <span class="text-sm font-semibold text-slate-500/80" aria-disabled="true" title="Donations are coming soon — thank you for your interest">Get Involved (coming soon)</span>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="{% url 'action' %}">Contact</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="bg-primary/80 text-background-dark font-bold px-6 py-2 rounded-lg transition-all shadow-lg shadow-primary/20 opacity-70 cursor-not-allowed" aria-disabled="true" title="Donations are being updated — thank you for your interest">Donate (coming soon)</span>
+                    <button id="mobile-menu-toggle" class="md:hidden text-slate-900 dark:text-slate-100 p-2">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden border-t border-primary/10 py-4 px-2">
+                <a class="block py-2 px-4 text-sm font-semibold hover:text-primary transition-colors" href="{% url 'home' %}">Home</a>
+                <a class="block py-2 px-4 text-sm font-semibold hover:text-primary transition-colors" href="{% url 'about_us' %}">About Us</a>
+                <a class="block py-2 px-4 text-sm font-semibold hover:text-primary transition-colors" href="{% url 'programs' %}">Programs</a>
+                <a class="block py-2 px-4 text-sm font-semibold hover:text-primary transition-colors" href="{% url 'agency' %}">Digital Agency</a>
+                <span class="block py-2 px-4 text-sm font-semibold text-slate-500/80" aria-disabled="true" title="Donations coming soon">Get Involved (coming soon)</span>
+                <a class="block py-2 px-4 text-sm font-semibold hover:text-primary transition-colors" href="{% url 'action' %}">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <script>
+        // mobile menu toggle
+        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <!-- common footer -->
+    <footer class="bg-background-dark text-slate-100 pt-24 pb-12 border-t border-primary/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                          <img src="{% static 'images/logo_070136.png' %}" alt="Bruckentech logo" class="h-8 md:h-10 w-auto mr-2" />
+                        <span class="text-2xl font-black uppercase tracking-tight">Brückentech</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed">
+                        Empowering Africa's youth through technology and mentorship. Based in Kasese, Uganda.
+                    </p>
+                    <div class="flex gap-4">
+                        <!-- TODO: replace '#' with your actual social/profile URLs -->
+                        <a class="bg-primary/10 text-primary p-2 rounded-lg hover:bg-primary hover:text-background-dark transition-all" href="#" aria-label="Facebook">
+                            <span class="material-symbols-outlined">public</span>
+                        </a>
+                        <a class="bg-primary/10 text-primary p-2 rounded-lg hover:bg-primary hover:text-background-dark transition-all" href="#" aria-label="Email">
+                            <span class="material-symbols-outlined">alternate_email</span>
+                        </a>
+                        <a class="bg-primary/10 text-primary p-2 rounded-lg hover:bg-primary hover:text-background-dark transition-all" href="#" aria-label="LinkedIn">
+                            <span class="material-symbols-outlined">group</span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white border-l-4 border-primary pl-3">Foundation</h4>
+                    <ul class="space-y-4">
+                        <li><a class="text-slate-400 hover:text-primary transition-colors" href="{% url 'about_us' %}">Our Story</a></li>
+                        <li><a class="text-slate-400 hover:text-primary transition-colors" href="{% url 'agency' %}">Digital Agency</a></li>
+                        <li><a class="text-slate-400 hover:text-primary transition-colors" href="{% url 'impact_reports' %}">Impact Reports</a></li>
+                        <li><a class="text-slate-400 hover:text-primary transition-colors" href="{% url 'join_mentor' %}">Join as Mentor</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white border-l-4 border-primary pl-3">Contact Us</h4>
+                    <ul class="space-y-4 text-slate-400">
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary">person</span>
+                            <span>Boniface Otim<br /><small class="opacity-70">Program Coordinator</small></span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">mail</span>
+                            <a class="hover:text-primary" href="mailto:hello@bruckentech.org">hello@bruckentech.org</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">location_on</span>
+                            <span>Kasese Town, Uganda</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white border-l-4 border-primary pl-3">Stay Updated</h4>
+                    <p class="text-slate-400 mb-6">Receive stories of impact and updates from our community.</p>
+                    <form class="flex flex-col gap-3">
+                        <input class="bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-primary text-white" placeholder="Your email address" type="email" />
+                        <button class="bg-primary text-background-dark font-bold py-3 rounded-lg hover:opacity-90 transition-all">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+                <p>© 2024 Brückentech Foundation. All rights reserved.</p>
+                <div class="flex gap-8">
+                    <a class="hover:text-primary" href="{% url 'privacy_policy' %}">Privacy Policy</a>
+                    <a class="hover:text-primary" href="{% url 'terms_of_service' %}">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

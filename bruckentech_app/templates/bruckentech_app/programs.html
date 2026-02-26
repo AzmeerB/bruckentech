@@ -1,0 +1,179 @@
+{% extends "bruckentech_app/base.html" %}
+
+{% block title %}Programs & Curriculum{% endblock %}
+
+{% block content %}
+    <header class="py-24 bg-white dark:bg-slate-900">
+        <div class="max-w-7xl mx-auto px-10 text-center">
+            <h1 class="text-5xl font-black">Our Programs &amp; Curriculum</h1>
+            <p class="mt-4 text-lg text-slate-600 dark:text-slate-400">
+                Discover the learning pathways we offer to equip youth with modern tech skills.
+            </p>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-10 py-24">
+        <section class="mb-24">
+            <h2 class="text-3xl font-black text-slate-900 dark:text-slate-100 mb-12">Our Learning Tracks</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Beginner Track -->
+                <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl p-8 overflow-hidden group hover:border-primary transition-all">
+                    <div class="bg-primary/10 text-primary p-4 rounded-xl w-fit mb-6">
+                        <span class="material-symbols-outlined text-3xl">grade</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-3">Beginner Track (3 months)</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6">
+                        Perfect for those new to technology. Learn computer basics, internet navigation, and essential digital literacy.
+                    </p>
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Computer Fundamentals</strong> – Hardware, OS, software basics</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Microsoft Office Suite</strong> – Word, Excel, PowerPoint</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Internet Safety</strong> – Cybersecurity awareness, email basics</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Digital Citizenship</strong> – Online etiquette, responsible use</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-primary text-background-dark font-bold py-3 rounded-xl hover:opacity-90 transition-all">
+                        Learn More
+                    </button>
+                </div>
+                <!-- Intermediate Track -->
+                <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl p-8 overflow-hidden group hover:border-primary transition-all">
+                    <div class="bg-primary/10 text-primary p-4 rounded-xl w-fit mb-6">
+                        <span class="material-symbols-outlined text-3xl">trending_up</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-3">Intermediate Track (6 months)</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6">
+                        For those ready to code. Master web development fundamentals and build your first projects.
+                    </p>
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>HTML & CSS</strong> – Web page structure and styling</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>JavaScript Basics</strong> – Interactivity and DOM manipulation</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Cisco CCNA Basics</strong> – Networking fundamentals</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Project-Based Learning</strong> – Build responsive websites</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-primary text-background-dark font-bold py-3 rounded-xl hover:opacity-90 transition-all">
+                        Learn More
+                    </button>
+                </div>
+                <!-- Advanced Track -->
+                <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl p-8 overflow-hidden group hover:border-primary transition-all">
+                    <div class="bg-primary/10 text-primary p-4 rounded-xl w-fit mb-6">
+                        <span class="material-symbols-outlined text-3xl">rocket_launch</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-3">Advanced Track (9 months)</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6">
+                        For the serious developer. Build full-stack applications and launch your tech career.
+                    </p>
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Backend with Django</strong> – Python, databases, APIs</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Frontend with React</strong> – Modern JavaScript frameworks</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>DevOps & Deployment</strong> – Git, Docker, cloud hosting</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Capstone Project</strong> – Build & ship a production app</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-primary text-background-dark font-bold py-3 rounded-xl hover:opacity-90 transition-all">
+                        Learn More
+                    </button>
+                </div>
+                <!-- Cisco Networking -->
+                <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-2xl p-8 overflow-hidden group hover:border-primary transition-all">
+                    <div class="bg-primary/10 text-primary p-4 rounded-xl w-fit mb-6">
+                        <span class="material-symbols-outlined text-3xl">router</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-3">Cisco Networking Academy</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6">
+                        Official Cisco CCNA certification pathway with industry-recognized credentials.
+                    </p>
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>CCNA Routing & Switching</strong> – Comprehensive networking</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Network Security Basics</strong> – Protect systems and data</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Hands-on Lab Training</strong> – Cisco equipment practice</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-primary font-bold mt-1">▸</span>
+                            <span class="text-slate-600 dark:text-slate-300"><strong>Exam Prep & Certification</strong> – Official CCNA exam</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-primary text-background-dark font-bold py-3 rounded-xl hover:opacity-90 transition-all">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section class="py-16 border-t border-slate-200 dark:border-primary/10">
+            <h2 class="text-3xl font-black text-slate-900 dark:text-slate-100 mb-8">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="flex flex-col items-center text-center">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-black text-xl mb-4">1</div>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Apply</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Tell us about your interests and goals.</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-black text-xl mb-4">2</div>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Learn</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Engage with hands-on lessons and projects.</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-black text-xl mb-4">3</div>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Build</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Create real projects for your portfolio.</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-black text-xl mb-4">4</div>
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">Launch</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Land internships, jobs, or freelance work.</p>
+                </div>
+            </div>
+        </section>
+        <section class="text-center py-16 border-t border-slate-200 dark:border-primary/10">
+            <h2 class="text-3xl font-black text-slate-900 dark:text-slate-100 mb-6">Ready to Start?</h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-lg">
+                Applications open annually. Contact us to learn about enrollment dates and application requirements.
+            </p>
+            <a href="{% url 'action' %}" class="inline-block bg-primary text-background-dark px-8 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform">
+                Get in Touch
+            </a>
+        </section>
+    </main>
+{% endblock %}
