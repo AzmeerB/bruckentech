@@ -17,3 +17,5 @@ Pillow
 django-storages[boto3]
 boto3
 django-markdownx
+psycopg2-binary==2.9.9
+dj-database-url==2.1.0
