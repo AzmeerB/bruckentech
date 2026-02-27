@@ -89,13 +89,16 @@ WSGI_APPLICATION = 'bruckentech.wsgi.application'
 
 # Use Postgres in production (via DATABASE_URL), SQLite locally
 if os.getenv('DATABASE_URL'):
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+    db_config = dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+    # Render Postgres requires SSL
+    db_config['OPTIONS'] = {
+        'sslmode': 'require',
     }
+    DATABASES = {'default': db_config}
 else:
     DATABASES = {
         'default': {
