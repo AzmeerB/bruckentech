@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Page
+from .models import Article, Page, MentorApplication
 from markdownx.admin import MarkdownxModelAdmin
 
 
@@ -26,3 +26,10 @@ class PageAdmin(MarkdownxModelAdmin, admin.ModelAdmin):
     search_fields = ('title', 'body')
     prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('created_at', 'updated_at')
+# applications submitted by prospective mentors
+@admin.register(MentorApplication)
+class MentorApplicationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'submitted_at')
+    search_fields = ('name', 'email', 'message')
+    readonly_fields = ('submitted_at',)
+    ordering = ('-submitted_at',)

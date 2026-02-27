@@ -84,6 +84,24 @@ missing.
 - Remove the old `Donation` model/table if no longer needed by creating a
   migration to drop it or by manual SQL.
 
+- The site now supports light/dark colour schemes. Users can switch using
+  the moon/sun icon in the top navigation; preference is saved in
+  `localStorage` and the initial theme respects the system setting.  Colours
+  are configured via Tailwind and a small custom CSS file (`main.css`).
+
 ---
 
 This README is kept deliberately small; expand as your project grows.
+
+## Production Checklist
+
+Before deploying to production, complete the following checks:
+
+- **Replace placeholders**: copy `.env.example` to `.env` and replace `SECRET_KEY`, `BANK_*`, `MM_*`, and any AWS variables with real values.
+- **Enable S3 (optional)**: if you plan to use S3 for media, set `USE_S3=True` and provide `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_STORAGE_BUCKET_NAME`.
+- **Re-enable account validation**: open `bruckentech/settings.py` and uncomment the validation block under `ACCOUNT_DETAILS` to enforce presence of account variables when `DEBUG=False`.
+- **Set production settings**: set `DEBUG=False` and configure `ALLOWED_HOSTS` appropriately.
+- **Run migrations and create admin**: run `python manage.py migrate` and create a superuser with `python manage.py createsuperuser`.
+- **Test media access**: upload an image in admin and verify media is served (locally with `DEBUG=True` or via S3 in production).
+
+When these steps are complete the site will start in production without placeholder account details.

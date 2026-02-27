@@ -22,6 +22,19 @@ class Page(models.Model):
         return mark_safe(markdown(self.body or "", extensions=["extra", "sane_lists"]))
 
 
+class MentorApplication(models.Model):
+    name = models.CharField(max_length=128)
+    email = models.EmailField()
+    message = models.TextField(blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-submitted_at"]
+
+    def __str__(self):
+        return f"{self.name} <{self.email}>"
+
+
 
 
 class Article(models.Model):

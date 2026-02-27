@@ -5,3 +5,30 @@
 @supports (mask-image: url()){ 
     /* nothing to add, just demonstrates support detection */
 }
+
+/* simple color variables so the site can transition smoothly */
+:root {
+    --color-bg: #f8f7f6;
+    --color-fg: #1a202c;
+    --color-link: #3182ce;
+}
+
+.dark {
+    --color-bg: #221d10;
+    --color-fg: #f8f7f6;
+    --color-link: #63b3ed;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+a {
+    color: var(--color-link);
+}
+
+a:hover {
+    opacity: 0.85;
+}

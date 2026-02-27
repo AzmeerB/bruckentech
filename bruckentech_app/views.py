@@ -103,11 +103,28 @@ def impact_reports(request):
 
 
 def join_mentor(request):
+    # mentor applications form
     from .models import Page
+    from .forms import MentorApplicationForm
+
     page = Page.objects.filter(slug='join_mentor', published=True).first()
     if page:
+        # if a CMS page exists we ignore the form (could enhance later)
         return render(request, 'bruckentech_app/page.html', {'page': page})
-    return render(request, 'bruckentech_app/join_mentor.html')
+
+    success = False
+    if request.method == "POST":
+        form = MentorApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            success = True
+    else:
+        form = MentorApplicationForm()
+
+    return render(request, 'bruckentech_app/join_mentor.html', {
+        'form': form,
+        'success': success,
+    })
 
 
 def privacy_policy(request):

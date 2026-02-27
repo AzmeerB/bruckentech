@@ -14,6 +14,8 @@ urlpatterns = [
     path('action/', views.action, name='action'),
     path('impact-reports/', views.impact_reports, name='impact_reports'),
     path('mentor/', views.join_mentor, name='join_mentor'),
+    path('become-mentor/', views.join_mentor, name='become_mentor'),
+    path('become-a-mentor/', views.join_mentor, name='become_a_mentor'),
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
 ]
