@@ -1,176 +1,143 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.conf import settings
 
 # simple views that render the corresponding template
 # templates live under bruckentech_app/templates/bruckentech_app/
 
+
 def home(request):
+    # prefer CMS page if available
+    from .models import Page
+    page = Page.objects.filter(slug='home', published=True).first()
+    if page:
+        return render(request, 'bruckentech_app/page.html', {'page': page})
     return render(request, 'bruckentech_app/home.html')
 
 
 def about_us(request):
+    from .models import Page
+    page = Page.objects.filter(slug='about_us', published=True).first()
+    if page:
+        return render(request, 'bruckentech_app/page.html', {'page': page})
     return render(request, 'bruckentech_app/about_us.html')
 
 
 def programs(request):
+    from .models import Page
+    page = Page.objects.filter(slug='programs', published=True).first()
+    if page:
+        return render(request, 'bruckentech_app/page.html', {'page': page})
     return render(request, 'bruckentech_app/programs.html')
 
 
 def agency(request):
+    from .models import Page
+    page = Page.objects.filter(slug='agency', published=True).first()
+    if page:
+        return render(request, 'bruckentech_app/page.html', {'page': page})
     return render(request, 'bruckentech_app/agency.html')
 
 
-import os
-import time
-import requests
-from django.conf import settings
-from django.shortcuts import redirect, render
+def account_details(request):
+    """Show foundation account details (bank / mobile money) for offline donations.
 
-from .models import Donation
-from .flutterwave_utils import get_flutterwave_access_token
-
-
-def donation(request):
-    """Render a donation form or initiate a Flutterwave payment.
-
-    The view accepts POST submissions with `amount` and `email`, then calls
-    the Flutterwave v3 payments API to create a checkout link. On success the
-    user is redirected to the hosted payment page. Any errors are shown back
-    on the form.
+    Reads `ACCOUNT_DETAILS` from settings if available, otherwise shows
+    placeholder information. This replaces the previously available
+    online donation flow.
     """
-
-    if request.method == "POST":
-        amount = request.POST.get("amount")
-        email = request.POST.get("email")
-
-        # minimal validation
-        if not amount or not email:
-            return render(request, 'bruckentech_app/donation.html', {
-                'error': 'Please provide both amount and email',
-            })
-
-        tx_ref = f"bruckentech_{int(time.time())}"
-
-        # record an initial donation object so we can update later
-        Donation.objects.create(
-            tx_ref=tx_ref,
-            email=email,
-            amount=amount,
-            status="initiated",
-        )
-
-        payload = {
-            "tx_ref": tx_ref,
-            "amount": amount,
-            "currency": "USD",
-            "redirect_url": request.build_absolute_uri(
-                '/donation/complete/'
-            ),
-            "payment_options": "card",
-            "customer": {"email": email, "name": ""},
-            "customizations": {
-                "title": "Support Bruckentech",
-                "description": "Donation to Brückentech Foundation",
+    accounts = getattr(settings, 'ACCOUNT_DETAILS', None)
+    if not accounts:
+        accounts = {
+            'bank': {
+                'bank_name': 'Example Bank',
+                'account_name': 'Brückentech Foundation',
+                'account_number': '0000000000',
             },
+            'mobile_money': {
+                'provider': 'MTN Mobile Money',
+                'number': '+256700000000',
+                'account_name': 'Brückentech Foundation',
+            }
         }
 
-        try:
-            # Get OAuth access token
-            access_token = get_flutterwave_access_token()
-            
-            headers = {
-                "Authorization": f"Bearer {access_token}",
-                "Content-Type": "application/json",
-            }
-            
-            resp = requests.post(
-                "https://api.flutterwave.com/v3/payments",
-                json=payload,
-                headers=headers,
-                timeout=10,
-            )
-            data = resp.json()
-        except Exception as exc:
-            return render(request, 'bruckentech_app/donation.html', {
-                'error': f'Payment request failed: {exc}',
-            })
-
-        if data.get('status') == 'success' and data.get('data'):
-            return redirect(data['data']['link'])
-
-        # show error from API
-        return render(request, 'bruckentech_app/donation.html', {
-            'error': data.get('message', 'unknown error'),
-            'api_response': data,
-        })
-
-    return render(request, 'bruckentech_app/donation.html')
+    return render(request, 'bruckentech_app/account_details.html', {
+        'accounts': accounts,
+    })
 
 
-def donation_complete(request):
-    """Handle the redirect back from Flutterwave after payment."""
+def articles_list(request):
+    from .models import Article
+    from django.db.models import Q
 
-    # Flutterwave will append ?status=successful&tx_ref=...&transaction_id=...
-    status = request.GET.get('status')
-    tx_ref = request.GET.get('tx_ref')
-    transaction_id = request.GET.get('transaction_id')
+    q = request.GET.get('q', '').strip()
+    qs = Article.objects.filter(published=True)
+    if q:
+        qs = qs.filter(
+            Q(title__icontains=q) | Q(body__icontains=q) | Q(excerpt__icontains=q)
+        )
+    articles = qs.order_by('-published_at')
+    return render(request, 'bruckentech_app/articles_list.html', {'articles': articles, 'q': q})
 
-    # try to update the corresponding donation record
-    donation = None
-    if tx_ref:
-        donation = Donation.objects.filter(tx_ref=tx_ref).first()
 
-    # verify with Flutterwave to be safe
-    verified_status = None
-    if transaction_id:
-        try:
-            # Get OAuth access token
-            access_token = get_flutterwave_access_token()
-            
-            headers = {
-                "Authorization": f"Bearer {access_token}",
-            }
-            resp = requests.get(
-                f"https://api.flutterwave.com/v3/transactions/{transaction_id}/verify",
-                headers=headers,
-                timeout=10,
-            )
-            vdata = resp.json()
-            # actual status is in vdata['data']['status']
-            verified_status = vdata.get('data', {}).get('status')
-        except Exception:
-            verified_status = None
+def article_detail(request, slug):
+    from .models import Article
 
-    final_status = verified_status or status
-
-    if donation:
-        donation.transaction_id = transaction_id or donation.transaction_id
-        donation.status = final_status or donation.status
-        donation.save()
-
-    context = {
-        'status': final_status,
-        'tx_ref': tx_ref,
-        'transaction_id': transaction_id,
-        'donation': donation,
-    }
-    return render(request, 'bruckentech_app/donation_complete.html', context)
+    article = get_object_or_404(Article, slug=slug, published=True)
+    return render(request, 'bruckentech_app/article_detail.html', {'article': article})
 
 
 def action(request):
+    from .models import Page
+    page = Page.objects.filter(slug='action', published=True).first()
+    if page:
+        return render(request, 'bruckentech_app/page.html', {'page': page})
     return render(request, 'bruckentech_app/action.html')
 
 
 def impact_reports(request):
+    from .models import Page
+    page = Page.objects.filter(slug='impact_reports', published=True).first()
+    if page:
+        return render(request, 'bruckentech_app/page.html', {'page': page})
     return render(request, 'bruckentech_app/impact_reports.html')
 
 
 def join_mentor(request):
-    return render(request, 'bruckentech_app/join_mentor.html')
+    # mentor applications form
+    from .models import Page
+    from .forms import MentorApplicationForm
+
+    page = Page.objects.filter(slug='join_mentor', published=True).first()
+    if page:
+        # if a CMS page exists we ignore the form (could enhance later)
+        return render(request, 'bruckentech_app/page.html', {'page': page})
+
+    success = False
+    if request.method == "POST":
+        form = MentorApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            success = True
+    else:
+        form = MentorApplicationForm()
+
+    return render(request, 'bruckentech_app/join_mentor.html', {
+        'form': form,
+        'success': success,
+    })
 
 
 def privacy_policy(request):
+    from .models import Page
+    page = Page.objects.filter(slug='privacy_policy', published=True).first()
+    if page:
+        return render(request, 'bruckentech_app/page.html', {'page': page})
     return render(request, 'bruckentech_app/privacy_policy.html')
 
 
 def terms_of_service(request):
+    from .models import Page
+    page = Page.objects.filter(slug='terms_of_service', published=True).first()
+    if page:
+        return render(request, 'bruckentech_app/page.html', {'page': page})
     return render(request, 'bruckentech_app/terms_of_service.html')

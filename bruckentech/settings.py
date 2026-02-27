@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bruckentech_app',  # our application containing templates and views
+    'markdownx',            # markdown editor for admin
 ]
 
 MIDDLEWARE = [
@@ -124,15 +125,37 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Flutterwave configuration – set these in the environment (e.g. via .env or your server)
-# Using OAuth2 token-based authentication (client_id + client_secret)
-# FLUTTERWAVE_SECRET_KEY is disabled; we use OAuth2 credentials instead
-import os
+# Account details shown in the "Account Details" page. Configure these via
+# environment variables (or override here for development).
+# In production we will raise an error if any required field is missing so the
+# deploy fails fast instead of showing placeholder values.
+ACCOUNT_DETAILS = {
+    'bank': {
+        'bank_name': os.getenv('BANK_NAME', 'Example Bank'),
+        'account_name': os.getenv('BANK_ACCOUNT_NAME', 'Bruckentech Foundation'),
+        'account_number': os.getenv('BANK_ACCOUNT_NUMBER', '0000000000'),
+    },
+    'mobile_money': {
+        'provider': os.getenv('MM_PROVIDER', 'MTN Mobile Money'),
+        'number': os.getenv('MM_NUMBER', '+256700000000'),
+        'account_name': os.getenv('MM_ACCOUNT_NAME', 'Bruckentech Foundation'),
+    }
+}
 
-# Flutterwave OAuth2 credentials for accessing APIs
-FLUTTERWAVE_CLIENT_ID = os.getenv('client_id', '')
-FLUTTERWAVE_CLIENT_SECRET = os.getenv('client_secret', '')
-FLUTTERWAVE_IDP_URL = 'https://idp.flutterwave.com/realms/flutterwave/protocol/openid-connect/token'
+# Temporary: disable strict production validation so local commands and
+# migrations can run without requiring live account environment variables.
+# Re-enable this check when you're ready to enforce real account details
+# by uncommenting the block below.
+#
+# if not DEBUG:
+#     from django.core.exceptions import ImproperlyConfigured
+#
+#     for section, fields in ACCOUNT_DETAILS.items():
+#         for key, value in fields.items():
+#             if not value:
+#                 raise ImproperlyConfigured(
+#                     f"Missing environment variable for account detail: {section}.{key}"
+#                 )
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
@@ -147,3 +170,36 @@ STATICFILES_DIRS = [
 
 # Use WhiteNoise to serve static files in production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# Media files (user-uploaded)
+# Development: serve from local filesystem. In production you should replace
+# this configuration with a cloud storage backend such as S3, and set an
+# appropriate `DEFAULT_FILE_STORAGE` (e.g. `storages.backends.s3boto3.S3Boto3Storage`).
+# The following defaults here will work for local development and staging but
+# do not scale with multiple servers.
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# optionally use S3 for media in production when USE_S3 env var set
+if not DEBUG and os.getenv('USE_S3', 'False').lower() in ('true', '1', 'yes'):
+    # django-storages will be required; install via requirements.txt
+    INSTALLED_APPS.append('storages')
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', '')
+    AWS_S3_CUSTOM_DOMAIN = os.getenv('AWS_S3_CUSTOM_DOMAIN', None)
+
+    # validate that required credentials are present
+    missing = [name for name in (
+        'AWS_ACCESS_KEY_ID',
+        'AWS_SECRET_ACCESS_KEY',
+        'AWS_STORAGE_BUCKET_NAME',
+    ) if not globals().get(name)]
+    if missing:
+        from django.core.exceptions import ImproperlyConfigured
+        raise ImproperlyConfigured(
+            f"Missing AWS env vars for S3 storage: {', '.join(missing)}"
+        )

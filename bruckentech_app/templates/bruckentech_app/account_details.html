@@ -1,0 +1,29 @@
+{% extends 'bruckentech_app/base.html' %}
+
+{% block title %}Account Details - Brückentech{% endblock %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-6">Account Details</h1>
+    <p class="mb-6 text-slate-600">You can support Brückentech by using the bank or mobile money details below.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white/5 p-6 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Bank Transfer</h2>
+            <p class="text-slate-400"><strong>Bank:</strong> {{ accounts.bank.bank_name }}</p>
+            <p class="text-slate-400"><strong>Account name:</strong> {{ accounts.bank.account_name }}</p>
+            <p class="text-slate-400"><strong>Account number:</strong> {{ accounts.bank.account_number }}</p>
+        </div>
+        <div class="bg-white/5 p-6 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Mobile Money</h2>
+            <p class="text-slate-400"><strong>Provider:</strong> {{ accounts.mobile_money.provider }}</p>
+            <p class="text-slate-400"><strong>Number:</strong> {{ accounts.mobile_money.number }}</p>
+            <p class="text-slate-400"><strong>Account name:</strong> {{ accounts.mobile_money.account_name }}</p>
+        </div>
+    </div>
+
+    <div class="mt-8 text-slate-500 text-sm">
+        <p>If you need a receipt or acknowledgement, please email <a href="mailto:hello@bruckentech.org">hello@bruckentech.org</a> with payment details.</p>
+    </div>
+</section>
+{% endblock %}

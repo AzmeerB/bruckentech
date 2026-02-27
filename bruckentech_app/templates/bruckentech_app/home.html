@@ -23,14 +23,14 @@
                     economic opportunities in the heart of Uganda.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <button
-                        class="bg-primary text-background-dark px-8 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform">
+                    <a href="{% url 'join_mentor' %}"
+                       class="bg-primary text-background-dark px-8 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform inline-block">
                         Join Our Program
-                    </button>
-                    <button
-                        class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition-all">
+                    </a>
+                    <a href="{% url 'programs' %}"
+                       class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition-all inline-block">
                         Learn More
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -207,9 +207,9 @@
                         <span class="material-symbols-outlined text-primary">check_circle</span> Data-Driven Growth Marketing
                     </li>
                 </ul>
-                <button class="bg-primary text-background-dark font-black px-8 py-4 rounded-xl hover:bg-white hover:text-navy-deep transition-all">
+                <a href="{% url 'agency' %}" class="bg-primary text-background-dark font-black px-8 py-4 rounded-xl hover:bg-white hover:text-navy-deep transition-all inline-block">
                     Hire Our Team
-                </button>
+                </a>
             </div>
         </div>
     </section>

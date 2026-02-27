@@ -12,9 +12,35 @@
         </div>
     </header>
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <p class="text-center text-slate-700 dark:text-slate-300">
-            <!-- Placeholder form or instructions -->
-            We are still building the mentor sign-up page. Please check back soon or contact us directly at <a href="mailto:hello@bruckentech.org" class="text-primary underline">hello@bruckentech.org</a>.
-        </p>
+        {% if success %}
+        <div class="text-center text-2xl font-bold text-primary">
+            Thank you for your interest! We'll be in touch soon.
+        </div>
+        {% else %}
+        <form method="post" class="max-w-xl mx-auto space-y-6">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div>
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+            <div>
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            <div>
+                {{ form.message.label_tag }}
+                {{ form.message }}
+                {{ form.message.errors }}
+            </div>
+            <div class="text-center">
+                <button type="submit" class="bg-primary text-background-dark px-8 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform">
+                    Send Application
+                </button>
+            </div>
+        </form>
+        {% endif %}
     </main>
 {% endblock %}

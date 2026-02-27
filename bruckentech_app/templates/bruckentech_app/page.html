@@ -1,0 +1,12 @@
+{% extends 'bruckentech_app/base.html' %}
+
+{% block title %}{{ page.title }} - Brückentech{% endblock %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto p-8">
+    <article class="prose dark:prose-invert">
+        <h1>{{ page.title }}</h1>
+        <div class="mt-6">{{ page.body|markdownx|safe }}</div>
+    </article>
+</section>
+{% endblock %}

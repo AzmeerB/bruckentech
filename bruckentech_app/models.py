@@ -1,23 +1,67 @@
 from django.db import models
+from django.utils.text import slugify
+from django.utils.safestring import mark_safe
+from markdown import markdown
 
 
-class Donation(models.Model):
-    tx_ref = models.CharField(max_length=128, unique=True)
-    transaction_id = models.CharField(max_length=128, blank=True, null=True)
-    email = models.EmailField()
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    # status: initiated before redirect, then successful/failed after verification
-    status = models.CharField(
-        max_length=32,
-        choices=[
-            ("initiated", "Initiated"),
-            ("successful", "Successful"),
-            ("failed", "Failed"),
-        ],
-        default="initiated",
-    )
+class Page(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+    body = models.TextField(help_text="Main content in Markdown")
+    published = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ["slug"]
+
     def __str__(self):
-        return f"{self.tx_ref} ({self.status})"
+        return self.title
+
+    def body_html(self):
+        return mark_safe(markdown(self.body or "", extensions=["extra", "sane_lists"]))
+
+
+class MentorApplication(models.Model):
+    name = models.CharField(max_length=128)
+    email = models.EmailField()
+    message = models.TextField(blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-submitted_at"]
+
+    def __str__(self):
+        return f"{self.name} <{self.email}>"
+
+
+
+
+class Article(models.Model):
+	title = models.CharField(max_length=255)
+	slug = models.SlugField(max_length=255, unique=True, blank=True)
+	excerpt = models.TextField(blank=True)
+	body = models.TextField(help_text="Write article body in Markdown")
+	image = models.ImageField(upload_to='articles/%Y/%m/%d/', blank=True, null=True)
+	published = models.BooleanField(default=False)
+	published_at = models.DateTimeField(blank=True, null=True)
+	author = models.CharField(max_length=128, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		ordering = ["-published_at", "-created_at"]
+
+	def __str__(self):
+		return self.title
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.title)[:255]
+		super().save(*args, **kwargs)
+
+	@property
+	def body_html(self):
+		"""Render Markdown body to safe HTML for templates."""
+		return mark_safe(markdown(self.body or "", extensions=["extra", "sane_lists"]))
+

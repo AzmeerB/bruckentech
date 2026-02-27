@@ -1,0 +1,18 @@
+{% extends 'bruckentech_app/base.html' %}
+
+{% block title %}{{ article.title }} - Brückentech{% endblock %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto p-8">
+    <article class="prose dark:prose-invert">
+        <h1>{{ article.title }}</h1>
+        <p class="text-sm text-slate-400">{{ article.published_at }} — {{ article.author }}</p>
+        {% if article.image %}
+        <div class="my-6">
+            <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full rounded-lg" />
+        </div>
+        {% endif %}
+        <div class="mt-6">{{ article.body_html|safe }}</div>
+    </article>
+</section>
+{% endblock %}
