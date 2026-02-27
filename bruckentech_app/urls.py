@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .feeds import ArticleFeed
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -8,6 +9,7 @@ urlpatterns = [
     path('agency/', views.agency, name='agency'),
     path('account/', views.account_details, name='account_details'),
     path('articles/', views.articles_list, name='articles_list'),
+    path('articles/rss/', ArticleFeed(), name='articles_rss'),
     path('articles/<slug:slug>/', views.article_detail, name='article_detail'),
     path('action/', views.action, name='action'),
     path('impact-reports/', views.impact_reports, name='impact_reports'),

@@ -9,6 +9,7 @@ class Article(models.Model):
 	slug = models.SlugField(max_length=255, unique=True, blank=True)
 	excerpt = models.TextField(blank=True)
 	body = models.TextField(help_text="Write article body in Markdown")
+	image = models.ImageField(upload_to='articles/%Y/%m/%d/', blank=True, null=True)
 	published = models.BooleanField(default=False)
 	published_at = models.DateTimeField(blank=True, null=True)
 	author = models.CharField(max_length=128, blank=True)

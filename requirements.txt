@@ -13,3 +13,7 @@ sqlparse==0.5.5
 urllib3==2.6.3
 whitenoise==6.4.0
 markdown
+Pillow
+django-storages[boto3]
+boto3
+django-markdownx

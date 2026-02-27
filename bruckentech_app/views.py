@@ -50,9 +50,16 @@ def account_details(request):
 
 def articles_list(request):
     from .models import Article
+    from django.db.models import Q
 
-    articles = Article.objects.filter(published=True).order_by('-published_at')
-    return render(request, 'bruckentech_app/articles_list.html', {'articles': articles})
+    q = request.GET.get('q', '').strip()
+    qs = Article.objects.filter(published=True)
+    if q:
+        qs = qs.filter(
+            Q(title__icontains=q) | Q(body__icontains=q) | Q(excerpt__icontains=q)
+        )
+    articles = qs.order_by('-published_at')
+    return render(request, 'bruckentech_app/articles_list.html', {'articles': articles, 'q': q})
 
 
 def article_detail(request, slug):
